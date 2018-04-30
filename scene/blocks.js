@@ -1,6 +1,7 @@
-var Block = function (position) {
+var Block = function (game, position) {
     var p = position
-    var image = imageFromPath('img/block.png')
+    var image = game.imageByName('block')
+    // log('block image', image)
     var block = {
         image: image,
         x: p[0],
@@ -11,6 +12,11 @@ var Block = function (position) {
     var o = block
     var aInb = function ( x1, x2, x3) {
         return (x1 >= x2 && x1 <= x3)
+    }
+    o.dblclickHasBlock = function (x, y) {
+        var xIn = x >= o.x && x<= o.x + o.image.width
+        var yIn = y >= o.y && y<= o.y + o.image.height
+        return xIn && yIn
     }
     o.collide = function (b) {
         var a = o
@@ -30,6 +36,7 @@ var Block = function (position) {
         if(o.lives < 1)
         {
             o.alive = false
+            killCount++
         }
     }
     return o

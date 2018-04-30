@@ -1,65 +1,24 @@
+
 var  _main = function () {
-    enableDebugMode(true)
-    var g = GuaGame()
-    var paddle = Paddle()
-    var ball = Ball()
-    var blocks = levelLoad(enableDebugMode(true) || 3)
-    log(blocks)
-    g.registerEvent('f', function () {
-        ball.fire()
-    })
-    g.registerEvent('a', function () {
-        paddle.moveLeft()
-    })
-    g.registerEvent('d', function () {
-        paddle.moveRight()
-    })
-    g.registerEvent('w', function () {
-        paddle.moveUp()
-    })
-    g.registerEvent('s', function () {
-        paddle.moveDown()
-    })
-    g.update = function () {
-        // log(window.paused)
-        if(window.paused){
-            return
+        //这里显式的初始化游戏
+        /*先初始化游戏得到game
+        **中间把game传给scene让游戏场景加载
+        **加载后的scene传给g.run，在run中持续与scene数据交互
+        */
+        var images = {
+            ball : 'img/ball.png',
+            block : 'img/block.png',
+            paddle : 'img/paddle.png',
         }
-        ball.ejection()
-        if( paddle.collideY(ball)){
-            ball.collideActionY()
-        } else if(paddle.collideX(ball)){
-            ball.collideActionX()
-        }
-        for (var i = 0; i < blocks.length; i++) {
-            var b = blocks[i]
-            if(b.collide(ball)){
-                log(b.lives)
-                b.kill()
-                log(b.alive)
-                ball.collideActionY()
-            }
-        }
-        // if(ball.collideY( ball, paddle )){
-        //     ball.speedY *= -1
-        // }
-        // else if(ball.collideX( ball, paddle )){
-        //     ball.speedX *= -1
-        // }
-    }
-    g.draw = function () {
 
-        g.drawImage(paddle)
-        g.drawImage(ball)
-        for (var i = 0; i < blocks.length; i++) {
-            var block = blocks[i]
-            // log(block.lives)
-            if(block.alive){
-                // log(block.alive)
-                g.drawImage(block)
 
-            }
-        }
-    }
-    }
+        var g = GuaGame.instance(images)
+        var s = SceneTitle.new(g)
+        //手动挂上run
+        g.runWithScene(s)
+
+        enableDebugMode(g , true)
+        clearLevelDate(false)
+}
+
 _main()

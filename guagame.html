@@ -13,50 +13,31 @@
     <body>
         <canvas id="canvas" width="600" height="400"></canvas>
         <hr>
-        <input id="input-fps-speed" type="range" value="1">
-        <script>
-        document.querySelector('#input-fps-speed').addEventListener('input', function (event) {
-            var input = event.target
-            window.fps = Number (input.value)
-        })
-        var levelLoad = function (n) {
-            var n = n - 1
-            var level = levels[n]
-            var blocks = []
-            for (var i = 0; i < level.length; i++) {
-                var p = level[i]
-                var b = Block(p)
-                blocks.push(b)
-            }
+        <input id="input-fps-speed" type="range" value="1">Fps值设置
+        <br>
+        <div id="level-button">
+            <button class="level-sequence" id="level-save" name="level">保存关卡</button>
 
-            return blocks
-        }
-        var blocks = []
-        var enableDebugMode = function (enable) {
-            if(!enable){
-                return
-            }
-        window.paused = false
-        window.addEventListener('keydown', function (event) {
-            var k = event.key
-            if( k == 'p'){
-                window.paused = !window.paused
-            } else if( '123456789'.includes(k)){
-                //这里有Bug，这里实际上并不能读取到k关卡，因为在main()里会自动读取已经定义的关卡
-                //留待以后修改
-                blocks = levelLoad(Number(k))
-            }
-        })
-    }
-
-
-        </script>
+        </div>
+        <!-- 关卡数据 -->
+        <script src = "level.js"></script>
+        <!-- 游戏图片 调试工具 -->
         <script src = "utils.js"></script>
+        <!-- 游戏加载 -->
+        <script src = "game/game.js"></script>
+        <script src = "game/game_scene.js"></script>
+        <!-- 游戏场景 -->
+        <script src = "scene/scene.js"></script>
         <script src = "scene/paddle.js"></script>
         <script src = "scene/ball.js"></script>
-        <script src = "scene/scene.js"></script>
+        <script src = "scene/scene_end/end.js"></script>
+        <script src = "scene/scene_title/title.js"></script>
         <script src = "scene/blocks.js"></script>
-        <script src = "level.js"></script>
+        <!-- 编辑关卡场景 -->
+        <script src = "scene/scene_editer/editer.js"></script>
+
+
+
         <script src = "main.js"></script>
 
 
